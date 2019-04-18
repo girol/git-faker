@@ -1,0 +1,7 @@
+# Configurations for running commands
+
+# Git readable url to remote repository to testing code
+remote_repo="git@github.com:username/repo.git"
+
+# Local repository to mirror locally
+local_repo=~/workspace/repo
