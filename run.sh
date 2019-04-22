@@ -1,53 +1,53 @@
 #!/bin/bash
 
 # Lets take the configs:
-
 source config
+source colors
 
-# A common pipeline for code deployment
-release_pipeline=('master' 'testing' 'beta' 'production')
+header="${magenta}[git faker]${nc}"
 
-echo "Using the repo ${remote_repo} for testing"
-
+# just some magic to the script
+echo -e "${header} Using the ${red}REMOTE${nc} repo ${remote_repo} for testing"
+echo -e "${header} Using the ${yellow}LOCAL${nc} repo ${local_repo} for testing"
 cd $local_repo
 
 # Cleaning up
-echo "Deleting everything"
-rm -rfv .git
+echo -e "${header} Deleting everything"
+rm -rf .git
 rm *.txt
 
-echo "Initializing empty repository"
+echo -e "${header} Initializing empty repository"
 git init
 
-echo "Adding remote"
+echo -e "${header} Adding remote"
 git remote add origin $remote_repo
 
-echo "Creating first commit"
-echo "# Releaser Sample" > README.md
+echo -e "${header} Creating first commit"
+echo -e "# Releaser Sample" > README.md
 git add . && git commit -m "First commit - README"
 
-echo "Preparing branches"
+echo -e "${header} Preparing branches"
 git branch testing
 git branch beta
 git branch production
 
-echo "Listing Branches"
+echo -e "${header} Listing Branches"
 git branch
 
-echo "Creating dummy commits"
+echo -e "${header} Creating dummy commits"
 
 for step in 1 2 3
 do
-    echo "stage ${step}" > "file${step}.txt"
+    echo "content ${step}" > "file${step}.txt"
     git add .
     git commit -m "Commit ${step}"
 done
 
-echo "Push IT!"
+echo "${header} Push IT!"
 
 for branch in ${release_pipeline[*]}
 do
+    echo -e "${header} Pushing ${red} $branch ${nc}"
     git push -f origin $branch
-    echo $branch
 done
 
