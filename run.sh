@@ -4,11 +4,11 @@
 source config
 source colors
 
+# Marking our commands from the default ones
 header="${magenta}[git faker]${nc}"
 
 # just some magic to the script
-echo -e "${header} Using the ${red}REMOTE${nc} repo ${remote_repo} for testing"
-echo -e "${header} Using the ${yellow}LOCAL${nc} repo ${local_repo} for testing"
+echo -e "${header} Using the ${yellow}LOCAL${nc} repo ${green}${local_repo}${nc} for testing"
 cd $local_repo
 
 clear_repository(){
@@ -22,9 +22,6 @@ base_init(){
 
     echo -e "${header} Initializing empty repository"
     git init
-
-    echo -e "${header} Adding remote"
-    git remote add origin $remote_repo
 
     echo -e "${header} Creating first commit"
     echo -e "# Releaser Sample" > README.md
@@ -44,7 +41,7 @@ create_local_branches(){
 create_dummy_commits(){
     echo -e "${header} Creating dummy commits"
 
-    for step in {1..max_objects}
+    for ((step=1 ; step<=$max_objects ; step++));
     do
         echo "content ${step}" > "file${step}.txt"
         git add .
@@ -63,4 +60,18 @@ push_all_to_remote(){
     done
 }
 
+# run all
+clear_repository
+base_init
+create_local_branches
+create_dummy_commits
 
+
+# If is remote, replicate the repo to the remote repository
+if [[ $1 = 'remote' ]]
+then
+    echo -e "${header} Using the ${red}REMOTE${nc} repo ${green}${remote_repo}${nc} for testing"
+    echo -e "${header} Adding remote"
+    git remote add origin $remote_repo
+    push_all_to_remote
+fi
