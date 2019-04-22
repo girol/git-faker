@@ -5,3 +5,9 @@ remote_repo="git@github.com:username/repo.git"
 
 # Local repository to mirror locally
 local_repo=~/workspace/repo
+
+# A common pipeline for code deployment
+release_pipeline=('master' 'testing' 'beta' 'production')
+
+# Maximum number of objects created in an iteration (creating commits for example)
+max_objects=3
