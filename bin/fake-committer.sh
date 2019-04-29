@@ -23,9 +23,10 @@ _fake_commits(){
     if [[ -n $1 ]]; then
         _prompt_user
         for ((step=1 ; step<=$1 ; step++)); do
-            echo "content ${step}" > "file${step}.txt"
+            timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+            echo "content ${timestamp}" > "file${step}.txt"
             git add .
-            git commit -m "Commit ${step}"
+            git commit -m "Commit ${timestamp}"
         done
 
     else
