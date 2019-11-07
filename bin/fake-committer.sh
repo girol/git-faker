@@ -3,7 +3,7 @@
 source $(git --exec-path)/git-sh-setup
 
 
-USAGE="INTEGER. INTEGER is the number of fake commits to generate"
+USAGE="[integer]. [integer] is the number of fake commits to generate"
 
 _prompt_user(){
 
