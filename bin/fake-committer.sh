@@ -22,7 +22,7 @@ _prompt_user(){
 _fake_commits(){
 
     if [[ -n $1 ]]; then
-        _prompt_user
+        _prompt_user $1
         for ((step=1 ; step<=$1 ; step++)); do
             timestamp=$(date '+%Y-%m-%d %H:%M:%S')
             echo "content ${timestamp}" > "file${step}.txt"
